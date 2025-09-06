@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { usePersistentState } from './hooks/usePersistentState';
 import { defaultPlayers } from './data/defaultPlayers';
+import { defaultCaptains } from './data/defaultCaptains';
 import { defaultTeams } from './data/defaultTeams';
 import PlayerList from './components/PlayerList';
 import TeamDashboard from './components/TeamDashboard';
@@ -24,7 +25,14 @@ function App() {
     }));
   };
 
-  const [players, setPlayers] = usePersistentState('auction-players', migratePlayerData(defaultPlayers));
+  const mergeCaptains = (playersList) => {
+    // avoid duplicates: only add captains that don't exist in the list
+    const existingIds = new Set(playersList.map(p => p.id));
+    const captainsToAdd = defaultCaptains.filter(c => !existingIds.has(c.id));
+    return [...playersList, ...captainsToAdd];
+  };
+
+  const [players, setPlayers] = usePersistentState('auction-players', migratePlayerData(mergeCaptains(defaultPlayers)));
   const [teams, setTeams] = usePersistentState('auction-teams', defaultTeams);
   const [activeTab, setActiveTab] = useState('players');
   const [selectedPlayer, setSelectedPlayer] = useState(null);
@@ -163,7 +171,7 @@ function App() {
 
   const handleResetData = () => {
     if (window.confirm('Are you sure you want to reset all data? This will clear all player assignments and restore original data.')) {
-      setPlayers(defaultPlayers);
+  setPlayers(mergeCaptains(defaultPlayers));
       setTeams(defaultTeams);
       setSelectedPlayer(null);
       setEditingPlayer(null);
@@ -175,7 +183,7 @@ function App() {
 
   const handleCSVImport = (importedPlayers) => {
     // Reset teams and clear all assignments when importing new players
-    setPlayers(importedPlayers);
+  setPlayers(mergeCaptains(importedPlayers));
     setTeams(defaultTeams);
     setSelectedPlayer(null);
     setEditingPlayer(null);
@@ -263,7 +271,7 @@ function App() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="max-w mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {activeTab === 'players' ? (
           <PlayerList
             players={players}

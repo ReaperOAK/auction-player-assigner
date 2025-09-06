@@ -60,3 +60,4 @@ export const defaultPlayers = [
   { id: 106, name: "Aditi Das", year: "2023", position: "DEF", prevTournament: false, gender: "female", department: "CSE", soldTo: null, price: 0 },
   { id: 107, name: "Ushasi Giri", year: "2023", position: "DEF", prevTournament: false, gender: "female", department: "CSE", soldTo: null, price: 0 }
 ];
+
