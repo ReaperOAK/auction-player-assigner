@@ -4,7 +4,8 @@ import { IconWarning } from './Icons';
 const EditTeamModal = ({ team, onSave, onClose }) => {
   const [formData, setFormData] = useState({
     name: team?.name || '',
-    budget: team?.budget || 1000
+  budget: team?.budget || 1000,
+  owner: team?.owner || ''
   });
 
   const handleSubmit = (e) => {
@@ -20,7 +21,7 @@ const EditTeamModal = ({ team, onSave, onClose }) => {
       return;
     }
 
-    onSave(team.id, { ...formData, budget });
+  onSave(team.id, { ...formData, budget, owner: formData.owner || null });
   };
 
   const handleChange = (field, value) => {
@@ -69,6 +70,20 @@ const EditTeamModal = ({ team, onSave, onClose }) => {
                 required
               />
             </div>
+
+              {/* Owner */}
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Owner
+                </label>
+                <input
+                  type="text"
+                  value={formData.owner}
+                  onChange={(e) => handleChange('owner', e.target.value)}
+                  className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  placeholder="Enter owner name"
+                />
+              </div>
 
             {/* Current spending info */}
             <div className="p-3 bg-gray-50 rounded-lg">

@@ -161,7 +161,7 @@ function App() {
     const newId = Math.max(...teams.map(t => t.id)) + 1;
     const newTeam = {
       id: newId,
-      ...teamData,
+  ...teamData,
       spent: 0,
       players: []
     };

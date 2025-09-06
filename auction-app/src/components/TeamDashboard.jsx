@@ -32,7 +32,6 @@ const TeamDashboard = ({ teams, players, onRemovePlayer, onEditTeam, onDeleteTea
               <div className="flex justify-between items-center mb-4">
                 <div>
                   <h3 className="text-lg font-semibold text-gray-800">{team.name}</h3>
-                  <p className="text-xs text-gray-500">{teamPlayers.length} players • Budget: {team.budget} pts</p>
                 </div>
                 <div className="flex items-center gap-3">
                   <div className="text-right">
@@ -87,7 +86,7 @@ const TeamDashboard = ({ teams, players, onRemovePlayer, onEditTeam, onDeleteTea
               </div>
 
               <div className="flex-1 flex flex-col">
-                <h4 className="font-semibold text-gray-700 border-b pb-1">Squad</h4>
+                <h4 className="font-semibold text-gray-700 border-b pb-1">Squad — Owner: {team.owner || 'N/A'}</h4>
                 {teamPlayers.length > 0 ? (
                   <div className="overflow-y-auto space-y-2 py-2">
                     {teamPlayers.map(player => (

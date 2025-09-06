@@ -3,7 +3,8 @@ import { useState } from 'react';
 const AddTeamModal = ({ onSave, onClose }) => {
   const [formData, setFormData] = useState({
     name: '',
-    budget: 1000
+  budget: 1000,
+  owner: ''
   });
 
   const handleSubmit = (e) => {
@@ -19,7 +20,7 @@ const AddTeamModal = ({ onSave, onClose }) => {
       return;
     }
 
-    onSave({ ...formData, budget });
+  onSave({ ...formData, budget, owner: formData.owner || null });
     setFormData({ name: '', budget: 1000 });
   };
 
@@ -65,6 +66,20 @@ const AddTeamModal = ({ onSave, onClose }) => {
               className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               placeholder="Enter budget amount"
               required
+            />
+          </div>
+
+          {/* Owner */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Owner
+            </label>
+            <input
+              type="text"
+              value={formData.owner}
+              onChange={(e) => handleChange('owner', e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Enter owner name (optional)"
             />
           </div>
 

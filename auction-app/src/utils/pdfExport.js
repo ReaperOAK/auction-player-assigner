@@ -160,14 +160,15 @@ export const generateAuctionPDF = (players, teams) => {
   const teamData = teams.map(team => {
     const teamPlayers = players.filter(p => p.soldTo == team.id);
     return [
-      team.name,
+    team.name,
+      team.owner || 'N/A',
       teamPlayers.length,
       `${team.spent} points`,
       `${team.budget - team.spent} points`
     ];
   });
 
-  const teamHeaders = ['Team', 'Players', 'Spent', 'Remaining'];
+  const teamHeaders = ['Team', 'Owner', 'Players', 'Spent', 'Remaining'];
 
   autoTable(doc, {
     startY: yPos,
@@ -231,13 +232,14 @@ export const generateAuctionPDF = (players, teams) => {
     
     // Add new page for each team
     doc.addPage();
-    yPos = addHeader('TEAM ROSTER', `${team.name} Squad`);
+  yPos = addHeader('TEAM ROSTER', `${team.name} Squad`);
 
-    // Team info with total spent
-    doc.setFontSize(14);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(primaryColor);
-    doc.text(`${team.name} - ${teamPlayers.length} Players - Total Spent: ${team.spent} points`, 20, yPos);
+  // Team info with owner and total spent
+  doc.setFontSize(14);
+  doc.setFont('helvetica', 'bold');
+  doc.setTextColor(primaryColor);
+  const ownerText = team.owner ? `Owner: ${team.owner} • ` : '';
+  doc.text(`${team.name} - ${teamPlayers.length} Players - ${ownerText}Total Spent: ${team.spent} points`, 20, yPos);
 
     yPos += 20;
 
@@ -250,7 +252,7 @@ export const generateAuctionPDF = (players, teams) => {
     } else {
       // Enhanced table with more details
       const teamPlayerHeaders = ['Player Name', 'Graduation Year', 'Position', 'Price', 'Department'];
-      const teamPlayerData = teamPlayers
+  const teamPlayerData = teamPlayers
         .sort((a, b) => {
           // Sort by position first (GK, DEF, MID, ATT), then by name
           const positionOrder = { 'GK': 1, 'DEF': 2, 'MID': 3, 'ATT': 4 };
@@ -266,7 +268,6 @@ export const generateAuctionPDF = (players, teams) => {
           `${player.price || 0} points`,
           player.department || 'N/A'
         ]);
-
       autoTable(doc, {
         startY: yPos,
         head: [teamPlayerHeaders],
@@ -289,12 +290,30 @@ export const generateAuctionPDF = (players, teams) => {
             data.cell.styles.textColor = primaryColor;
             data.cell.styles.fontStyle = 'bold';
           }
+
           // Highlight high-value players (over 30 points)
           if (data.column.index === 3 && data.cell.text[0]) {
             const price = parseInt(data.cell.text[0].replace('$', ''));
             if (price > 30) {
               data.cell.styles.textColor = dangerColor;
               data.cell.styles.fontStyle = 'bold';
+            }
+          }
+
+          // Highlight captain row: use the original teamPlayers array to check isCaptain or match captainId
+          if (typeof data.row !== 'undefined' && data.row.index != null) {
+            const rowIndex = data.row.index;
+            const playerObj = teamPlayers[rowIndex];
+            const isCaptain = playerObj && (playerObj.isCaptain === true || playerObj.id === team.captainId);
+            if (isCaptain) {
+              // Make entire row stand out: use light yellow background for the cell and bold font for the name
+              data.cell.styles.fillColor = [255, 249, 196]; // light yellow
+              if (data.column.index === 0) {
+                // Append (Captain) label to name cell
+                data.cell.text = [String(data.cell.text[0]) + ' (Captain)'];
+                data.cell.styles.fontStyle = 'bold';
+                data.cell.styles.textColor = primaryColor;
+              }
             }
           }
         }
