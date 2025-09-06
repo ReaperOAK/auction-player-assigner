@@ -184,7 +184,7 @@ export const generateAuctionPDF = (players, teams) => {
   doc.addPage();
   yPos = addHeader('COMPLETE PLAYER LIST', 'All Registered Players with Auction Status');
 
-  const playerHeaders = ['Name', 'Year', 'Position', 'Team'];
+  const playerHeaders = ['Name', 'Graduation Year', 'Position', 'Team'];
   const playerData = players
     .sort((a, b) => {
       // Handle null/undefined soldTo values
@@ -249,7 +249,7 @@ export const generateAuctionPDF = (players, teams) => {
       doc.text('No players assigned to this team yet.', 20, yPos);
     } else {
       // Enhanced table with more details
-      const teamPlayerHeaders = ['Player Name', 'Year', 'Position', 'Price', 'Department'];
+      const teamPlayerHeaders = ['Player Name', 'Graduation Year', 'Position', 'Price', 'Department'];
       const teamPlayerData = teamPlayers
         .sort((a, b) => {
           // Sort by position first (GK, DEF, MID, ATT), then by name
@@ -276,7 +276,7 @@ export const generateAuctionPDF = (players, teams) => {
         bodyStyles: { fontSize: 10 },
         columnStyles: {
           0: { cellWidth: 60, halign: 'left' },   // Player Name
-          1: { cellWidth: 20, halign: 'center' }, // Year
+          1: { cellWidth: 20, halign: 'center' }, // Graduation Year
           2: { cellWidth: 25, halign: 'center' }, // Position
           3: { cellWidth: 25, halign: 'center' }, // Price
           4: { cellWidth: 30, halign: 'center' }  // Department

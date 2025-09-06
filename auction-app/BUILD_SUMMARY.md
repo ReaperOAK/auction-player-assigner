@@ -3,7 +3,7 @@
 ## ✅ Completed Features
 
 ### 1. **Players Management**
-- **Player List**: Displays all players with name, year, position, and previous tournament status
+- **Player List**: Displays all players with name, year, position, and Played Departmental? status
 - **Position Filtering**: Filter players by position (ALL, GK, DEF, MID, ATT)
 - **Status Tracking**: Shows whether players are SOLD or UNSOLD
 - **Visual Indicators**: Color-coded positions and status badges

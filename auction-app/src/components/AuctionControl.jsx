@@ -52,8 +52,8 @@ const AuctionControl = ({ selectedPlayer, teams, onAssignPlayer, onClose }) => {
             <h4 className="font-semibold text-lg">{selectedPlayer.name}</h4>
             <div className="text-sm text-gray-600 mt-1">
               <p>Position: {selectedPlayer.position}</p>
-              <p>Year: {selectedPlayer.year}</p>
-              <p>Previous Tournament: {selectedPlayer.prevTournament ? 'Yes' : 'No'}</p>
+              <p>Graduation Year: {selectedPlayer.year}</p>
+              <p>Played Departmental?: {selectedPlayer.prevTournament ? 'Yes' : 'No'}</p>
             </div>
           </div>
 

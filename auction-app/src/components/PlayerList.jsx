@@ -151,8 +151,8 @@ const PlayerList = ({ players, teams, onPlayerSelect, onEditPlayer, onDeletePlay
               </div>
 
               <div className="text-sm text-gray-600 space-y-1">
-                <p>Year: <span className="font-medium text-gray-700">{player.year}</span></p>
-                <p>Prev Tournament: <span className="font-medium text-gray-700">{player.prevTournament ? 'Yes' : 'No'}</span></p>
+                <p>Graduation Year: <span className="font-medium text-gray-700">{player.year}</span></p>
+                <p>Played Departmental? : <span className="font-medium text-gray-700">{player.prevTournament ? 'Yes' : 'No'}</span></p>
 
                 {playerStatus.status === 'SOLD' ? (
                   <div className="mt-3 p-3 bg-green-100 rounded">

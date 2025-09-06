@@ -49,10 +49,10 @@ const EditPlayerModal = ({ player, onSave, onClose }) => {
             />
           </div>
 
-          {/* Year */}
+          {/* Graduation Year */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Year *
+              Graduation Year *
             </label>
             <input
               type="text"
@@ -96,7 +96,7 @@ const EditPlayerModal = ({ player, onSave, onClose }) => {
             </select>
           </div>
 
-          {/* Previous Tournament */}
+          {/* Played Departmental? */}
           <div>
             <label className="flex items-center space-x-2">
               <input
@@ -106,7 +106,7 @@ const EditPlayerModal = ({ player, onSave, onClose }) => {
                 className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
               />
               <span className="text-sm font-medium text-gray-700">
-                Participated in previous tournament
+                Played Departmental?
               </span>
             </label>
           </div>

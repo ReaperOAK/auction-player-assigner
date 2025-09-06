@@ -17,7 +17,7 @@ Here’s the plan:
 
    * Show all players with:
 
-     * Name, Year, Position (GK/DEF/MID/ATT), Prev tournament (Y/N).
+     * Name, Graduation Year, Position (GK/DEF/MID/ATT), Played Departmental? (Y/N).
    * Filter buttons for categories (GK/DEF/MID/ATT).
    * Status → Unsold / Sold (and to which team).
 

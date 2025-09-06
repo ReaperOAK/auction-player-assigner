@@ -49,10 +49,10 @@ const AddPlayerModal = ({ onSave, onClose }) => {
             />
           </div>
 
-          {/* Year */}
+          {/* Graduation Year */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
-              Year *
+              Graduation Year *
             </label>
             <input
               type="text"
@@ -61,7 +61,7 @@ const AddPlayerModal = ({ onSave, onClose }) => {
               className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
               placeholder="e.g., 2023"
               required
-              aria-label="Year"
+              aria-label="Graduation Year"
             />
           </div>
 
@@ -99,7 +99,7 @@ const AddPlayerModal = ({ onSave, onClose }) => {
             </select>
           </div>
 
-          {/* Previous Tournament */}
+          {/* Played Departmental? */}
           <div>
             <label className="flex items-center space-x-2">
               <input
@@ -107,9 +107,9 @@ const AddPlayerModal = ({ onSave, onClose }) => {
                 checked={formData.prevTournament}
                 onChange={(e) => handleChange('prevTournament', e.target.checked)}
                 className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-400"
-                aria-label="Participated in previous tournament"
+                aria-label="Played Departmental?"
               />
-              <span className="text-sm font-medium text-gray-700">Participated in previous tournament</span>
+              <span className="text-sm font-medium text-gray-700">Played Departmental?</span>
             </label>
           </div>
 

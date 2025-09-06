@@ -13,14 +13,6 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
     'Attacker': 'ATT'
   };
 
-  // Year mapping for batch normalization
-  const yearMap = {
-    '1st': '2025',
-    '2nd': '2024', 
-    '3rd': '2023',
-    '4th': '2022'
-  };
-
   const parseCSV = (csvText) => {
     const lines = csvText.trim().split('\n');
     
@@ -105,13 +97,17 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
         
         if (!name) continue;
         
-        // Parse year - correct mapping based on graduation year
+        // Parse year - correct mapping based on graduation year  
         let parsedYear = year;
-        if (year.includes('4th')) parsedYear = '2022'; // 4th year students graduate in 2025 (so they are batch 2022)
-        else if (year.includes('3rd') || year.includes('Batch 2023')) parsedYear = '2023'; // 3rd year students graduate in 2026 (batch 2023)
-        else if (year.includes('2nd') || year.includes('Batch 2024')) parsedYear = '2024'; // 2nd year students graduate in 2027 (batch 2024)
-        else if (year.includes('1st') || year.includes('Batch 2025')) parsedYear = '2025'; // 1st year students graduate in 2028 (batch 2025)
-        
+        if (year.includes('4th')) parsedYear = '2026'; // 4th year students graduate in 2025 (so they are batch 2022)
+        else if (year.includes('3rd')) parsedYear = '2027'; // 3rd year students graduate in 2026 (batch 2023)
+        else if (year.includes('2nd')) parsedYear = '2028'; // 2nd year students graduate in 2027 (batch 2024)  
+        else if (year.includes('1st')) parsedYear = '2029'; // 1st year students graduate in 2028 (batch 2025)
+        else if (year.includes('Batch 2025')) parsedYear = '2025'; // students graduate in 2025 (batch 2025)
+        else if (year.includes('Batch 2024')) parsedYear = '2024'; // students graduate in 2024 (batch 2024)
+        else if (year.includes('Batch 2023')) parsedYear = '2023'; // students graduate in 2023 (batch 2023)
+        else if (year.includes('Batch 2022')) parsedYear = '2022';
+
         // Parse position
         let parsedPosition = 'MID';
         if (position.includes('Goalkeeper')) parsedPosition = 'GK';
@@ -204,7 +200,7 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
 
           <div className="mb-4 p-3 bg-yellow-50 rounded-md">
             <p className="text-sm text-yellow-700"><strong>Note:</strong> This will replace all existing player data. Any auction progress (sold players, prices) will be lost.</p>
-            <p className="text-xs text-yellow-600 mt-1">Expected format: RSTC registration CSV with Role, Name, Department, Position, Year columns.</p>
+            <p className="text-xs text-yellow-600 mt-1">Expected format: RSTC registration CSV with Role, Name, Department, Position, Graduation Year columns.</p>
           </div>
 
           <div className="flex justify-end space-x-3">
