@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { IconEdit, IconTrash, IconMale, IconFemale } from './Icons';
 
 const PlayerList = ({ players, teams, onPlayerSelect, onEditPlayer, onDeletePlayer }) => {
   const [positionFilter, setPositionFilter] = useState('ALL');
@@ -33,8 +34,8 @@ const PlayerList = ({ players, teams, onPlayerSelect, onEditPlayer, onDeletePlay
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6">
-      <h2 className="text-2xl font-bold mb-4 text-gray-800">Players</h2>
+    <div className="card">
+      <h2 className="text-2xl font-semibold mb-4 text-gray-800">Players</h2>
       
       {/* Filter sections */}
       <div className="space-y-4 mb-6">
@@ -118,24 +119,18 @@ const PlayerList = ({ players, teams, onPlayerSelect, onEditPlayer, onDeletePlay
       </div>
 
       {/* Players grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
         {filteredPlayers.map(player => {
           const playerStatus = getPlayerStatus(player);
           return (
-            <div
+            <article
               key={player.id}
-              className={`p-4 rounded-lg border-2 transition-all hover:shadow-md ${
-                playerStatus.status === 'SOLD'
-                  ? 'border-green-200 bg-green-50'
-                  : 'border-gray-200 bg-white hover:border-blue-300'
-              }`}
+              className={`p-4 rounded-lg transition-all ${playerStatus.status === 'SOLD' ? 'bg-green-50 border border-green-100' : 'bg-white border border-gray-100 hover:shadow-lg'}`}
             >
-              <div className="flex justify-between items-start mb-2">
+              <div className="flex justify-between items-start mb-3">
                 <div className="flex-1">
-                  <h3 className="font-semibold text-gray-800">{player.name}</h3>
-                  <p className="text-xs text-gray-500">
-                    {(player.gender || 'male') === 'female' ? '👩 Girl' : '👨 Boy'}
-                  </p>
+                  <h3 className="font-semibold text-gray-800 text-lg">{player.name}</h3>
+                  <p className="text-xs text-gray-500 mt-1 flex items-center gap-2">{(player.gender || 'male') === 'female' ? <><IconFemale className="w-4 h-4" /> Girl</> : <><IconMale className="w-4 h-4" /> Boy</>}</p>
                 </div>
                 <div className="flex items-center gap-2">
                   <span className={`px-2 py-1 text-xs rounded-full font-medium ${
@@ -143,57 +138,39 @@ const PlayerList = ({ players, teams, onPlayerSelect, onEditPlayer, onDeletePlay
                     player.position === 'DEF' ? 'bg-blue-100 text-blue-800' :
                     player.position === 'MID' ? 'bg-green-100 text-green-800' :
                     'bg-red-100 text-red-800'
-                  }`}>
-                    {player.position}
-                  </span>
+                  }`}>{player.position}</span>
                   <div className="flex gap-1">
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        onEditPlayer(player);
-                      }}
-                      className="text-blue-500 hover:text-blue-700 text-xs font-medium px-2 py-1 rounded hover:bg-blue-50"
-                      title="Edit player"
-                    >
-                      ✏️
+                    <button onClick={(e) => { e.stopPropagation(); onEditPlayer(player); }} className="text-primary-700 hover:text-primary-800 text-sm px-2 py-1 rounded focus-ring" aria-label={`Edit ${player.name}`}>
+                      <IconEdit className="w-4 h-4" />
                     </button>
-                    <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        if (window.confirm(`Are you sure you want to delete ${player.name}?`)) {
-                          onDeletePlayer(player.id);
-                        }
-                      }}
-                      className="text-red-500 hover:text-red-700 text-xs font-medium px-2 py-1 rounded hover:bg-red-50"
-                      title="Delete player"
-                    >
-                      🗑️
+                    <button onClick={(e) => { e.stopPropagation(); if (window.confirm(`Are you sure you want to delete ${player.name}?`)) { onDeletePlayer(player.id); } }} className="text-red-500 hover:text-red-700 text-sm px-2 py-1 rounded focus-ring" aria-label={`Delete ${player.name}`}>
+                      <IconTrash className="w-4 h-4" />
                     </button>
                   </div>
                 </div>
               </div>
-              
+
               <div className="text-sm text-gray-600 space-y-1">
-                <p>Year: {player.year}</p>
-                <p>Prev Tournament: {player.prevTournament ? 'Yes' : 'No'}</p>
-                
+                <p>Year: <span className="font-medium text-gray-700">{player.year}</span></p>
+                <p>Prev Tournament: <span className="font-medium text-gray-700">{player.prevTournament ? 'Yes' : 'No'}</span></p>
+
                 {playerStatus.status === 'SOLD' ? (
-                  <div className="mt-2 p-2 bg-green-100 rounded">
-                    <p className="text-green-800 font-medium">SOLD</p>
-                    <p className="text-green-700">Team: {playerStatus.team}</p>
-                    <p className="text-green-700">Price: {playerStatus.price} points</p>
+                  <div className="mt-3 p-3 bg-green-100 rounded">
+                    <p className="text-green-800 font-medium">SOLD • {playerStatus.price} pts</p>
+                    <p className="text-green-700 text-sm">Team: {playerStatus.team}</p>
                   </div>
                 ) : (
-                  <div 
-                    className="mt-2 p-2 bg-gray-100 rounded cursor-pointer hover:bg-gray-200"
+                  <button
+                    className="mt-3 w-full text-left p-3 bg-surface-50 rounded hover:bg-surface-100 focus-ring"
                     onClick={() => onPlayerSelect(player)}
+                    aria-label={`Assign ${player.name} to a team`}
                   >
                     <p className="text-gray-700 font-medium">UNSOLD</p>
-                    <p className="text-gray-600 text-xs">Click to assign to team</p>
-                  </div>
+                    <p className="text-gray-500 text-xs">Click to assign to team</p>
+                  </button>
                 )}
               </div>
-            </div>
+            </article>
           );
         })}
       </div>

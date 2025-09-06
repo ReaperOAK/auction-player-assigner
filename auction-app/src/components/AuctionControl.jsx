@@ -39,29 +39,25 @@ const AuctionControl = ({ selectedPlayer, teams, onAssignPlayer, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-800">Assign Player</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl"
-          >
-            ×
-          </button>
-        </div>
-
-        {/* Player Info */}
-        <div className="mb-6 p-4 bg-gray-50 rounded-lg">
-          <h4 className="font-semibold text-lg">{selectedPlayer.name}</h4>
-          <div className="text-sm text-gray-600 mt-1">
-            <p>Position: {selectedPlayer.position}</p>
-            <p>Year: {selectedPlayer.year}</p>
-            <p>Previous Tournament: {selectedPlayer.prevTournament ? 'Yes' : 'No'}</p>
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div className="w-full max-w-lg mx-4">
+        <div className="card">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-semibold text-gray-800">Assign Player</h3>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl focus-ring" aria-label="Close dialog">×</button>
           </div>
-        </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          {/* Player Info */}
+          <div className="mb-6 p-4 bg-surface-50 rounded-lg">
+            <h4 className="font-semibold text-lg">{selectedPlayer.name}</h4>
+            <div className="text-sm text-gray-600 mt-1">
+              <p>Position: {selectedPlayer.position}</p>
+              <p>Year: {selectedPlayer.year}</p>
+              <p>Previous Tournament: {selectedPlayer.prevTournament ? 'Yes' : 'No'}</p>
+            </div>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-4">
           {/* Team Selection */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -70,8 +66,9 @@ const AuctionControl = ({ selectedPlayer, teams, onAssignPlayer, onClose }) => {
             <select
               value={selectedTeam}
               onChange={(e) => setSelectedTeam(e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
               required
+              aria-label="Choose team"
             >
               <option value="">Choose a team...</option>
               {teams.map(team => (
@@ -93,8 +90,9 @@ const AuctionControl = ({ selectedPlayer, teams, onAssignPlayer, onClose }) => {
               onChange={(e) => setPrice(e.target.value)}
               min="1"
               placeholder="Enter price"
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
               required
+              aria-label="Purchase price"
             />
           </div>
 
@@ -126,21 +124,11 @@ const AuctionControl = ({ selectedPlayer, teams, onAssignPlayer, onClose }) => {
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-1 px-4 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
-            >
-              Assign Player
-            </button>
+            <button type="button" onClick={onClose} className="flex-1 btn btn-ghost">Cancel</button>
+            <button type="submit" className="flex-1 btn btn-primary">Assign Player</button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

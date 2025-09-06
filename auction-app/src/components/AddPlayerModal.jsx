@@ -24,19 +24,15 @@ const AddPlayerModal = ({ onSave, onClose }) => {
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 max-w-md w-full mx-4">
-        <div className="flex justify-between items-center mb-4">
-          <h3 className="text-xl font-bold text-gray-800">Add New Player</h3>
-          <button
-            onClick={onClose}
-            className="text-gray-500 hover:text-gray-700 text-2xl"
-          >
-            ×
-          </button>
-        </div>
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div className="w-full max-w-md mx-4">
+        <div className="card">
+          <div className="flex justify-between items-center mb-4">
+            <h3 className="text-xl font-semibold text-gray-800">Add New Player</h3>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl focus-ring" aria-label="Close dialog">×</button>
+          </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className="space-y-4">
           {/* Name */}
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -46,9 +42,10 @@ const AddPlayerModal = ({ onSave, onClose }) => {
               type="text"
               value={formData.name}
               onChange={(e) => handleChange('name', e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
               placeholder="Enter player name"
               required
+              aria-label="Player name"
             />
           </div>
 
@@ -61,9 +58,10 @@ const AddPlayerModal = ({ onSave, onClose }) => {
               type="text"
               value={formData.year}
               onChange={(e) => handleChange('year', e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
               placeholder="e.g., 2023"
               required
+              aria-label="Year"
             />
           </div>
 
@@ -75,7 +73,8 @@ const AddPlayerModal = ({ onSave, onClose }) => {
             <select
               value={formData.position}
               onChange={(e) => handleChange('position', e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+              aria-label="Position"
             >
               <option value="GK">Goalkeeper (GK)</option>
               <option value="DEF">Defender (DEF)</option>
@@ -92,7 +91,8 @@ const AddPlayerModal = ({ onSave, onClose }) => {
             <select
               value={formData.gender}
               onChange={(e) => handleChange('gender', e.target.value)}
-              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+              aria-label="Gender"
             >
               <option value="male">Boy</option>
               <option value="female">Girl</option>
@@ -106,31 +106,20 @@ const AddPlayerModal = ({ onSave, onClose }) => {
                 type="checkbox"
                 checked={formData.prevTournament}
                 onChange={(e) => handleChange('prevTournament', e.target.checked)}
-                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500"
+                className="w-4 h-4 text-primary-600 bg-gray-100 border-gray-300 rounded focus:ring-primary-400"
+                aria-label="Participated in previous tournament"
               />
-              <span className="text-sm font-medium text-gray-700">
-                Participated in previous tournament
-              </span>
+              <span className="text-sm font-medium text-gray-700">Participated in previous tournament</span>
             </label>
           </div>
 
           {/* Action Buttons */}
           <div className="flex gap-3 pt-4">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-3 border border-gray-300 text-gray-700 rounded-md hover:bg-gray-50 font-medium"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              className="flex-1 px-4 py-3 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium"
-            >
-              Add Player
-            </button>
+            <button type="button" onClick={onClose} className="flex-1 btn btn-ghost">Cancel</button>
+            <button type="submit" className="flex-1 btn bg-green-600 hover:bg-green-700 text-white">Add Player</button>
           </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
   );

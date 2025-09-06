@@ -1,3 +1,44 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+:root {
+	--radius: 0.75rem;
+	--glass: rgba(255,255,255,0.6);
+}
+
+html, body, #root {
+	height: 100%;
+}
+
+/* Utility: subtle focus ring for keyboard users */
+.focus-ring:focus {
+	outline: 3px solid rgba(59,130,246,0.35);
+	outline-offset: 2px;
+}
+
+/* Screen-reader only but visible on focus (skip link) */
+.sr-only:not(:focus):not(:active) {
+	clip: rect(0 0 0 0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
+}
+
+/* Small helpers */
+.card {
+	@apply bg-white rounded-xl p-6 shadow-card border border-gray-100;
+}
+
+.btn {
+	@apply inline-flex items-center justify-center px-4 py-2 rounded-md font-medium transition-all text-sm;
+}
+
+.btn-primary { @apply bg-primary-600 text-white hover:bg-primary-700; }
+.btn-ghost { @apply bg-transparent text-gray-700 hover:bg-gray-100; }
+

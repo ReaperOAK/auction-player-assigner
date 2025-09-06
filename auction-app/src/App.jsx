@@ -10,6 +10,7 @@ import EditTeamModal from './components/EditTeamModal';
 import AddPlayerModal from './components/AddPlayerModal';
 import AddTeamModal from './components/AddTeamModal';
 import CSVImportModal from './components/CSVImportModal';
+import Header from './components/Header';
 import { generateAuctionPDF } from './utils/pdfExport';
 import './App.css';
 
@@ -191,87 +192,59 @@ function App() {
   const totalSpent = teams.reduce((sum, team) => sum + team.spent, 0);
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      {/* Header */}
-      <header className="bg-white shadow-sm border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center py-4">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900">🏆 Auction Dashboard</h1>
-              <p className="text-gray-600 mt-1">
-                {totalPlayersAssigned}/{players.length} players assigned • Total spent: {totalSpent} points
-              </p>
-            </div>
-            <div className="flex gap-2">
-              <button
-                onClick={() => setShowCSVImport(true)}
-                className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium"
-              >
-                Import CSV
-              </button>
-              <button
-                onClick={handleExportData}
-                className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 font-medium"
-              >
-                Export PDF
-              </button>
-              <button
-                onClick={handleResetData}
-                className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 font-medium"
-              >
-                Reset All
-              </button>
-            </div>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-surface-50">
+      <Header
+        totalPlayersAssigned={totalPlayersAssigned}
+        totalPlayers={players.length}
+        totalSpent={totalSpent}
+        onImportCSV={() => setShowCSVImport(true)}
+        onExportPDF={handleExportData}
+        onReset={handleResetData}
+      />
 
       {/* Navigation */}
-      <nav className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center">
-            <div className="flex space-x-8">
+      <nav className="bg-transparent border-b">
+        <div className="container py-3 flex items-center justify-between">
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => setActiveTab('players')}
+              className={`py-2 px-3 rounded-md font-medium text-sm transition ${
+                activeTab === 'players'
+                  ? 'bg-white shadow-sm text-primary-700'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Players ({players.length})
+            </button>
+            <button
+              onClick={() => setActiveTab('teams')}
+              className={`py-2 px-3 rounded-md font-medium text-sm transition ${
+                activeTab === 'teams'
+                  ? 'bg-white shadow-sm text-primary-700'
+                  : 'text-gray-600 hover:text-gray-900'
+              }`}
+            >
+              Teams ({teams.length})
+            </button>
+          </div>
+
+          <div className="flex gap-2">
+            {activeTab === 'players' && (
               <button
-                onClick={() => setActiveTab('players')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'players'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                onClick={() => setShowAddPlayer(true)}
+                className="btn btn-primary"
               >
-                Players ({players.length})
+                + Add Player
               </button>
+            )}
+            {activeTab === 'teams' && (
               <button
-                onClick={() => setActiveTab('teams')}
-                className={`py-4 px-1 border-b-2 font-medium text-sm ${
-                  activeTab === 'teams'
-                    ? 'border-blue-500 text-blue-600'
-                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                }`}
+                onClick={() => setShowAddTeam(true)}
+                className="btn btn-primary"
               >
-                Teams ({teams.length})
+                + Add Team
               </button>
-            </div>
-            
-            {/* Add buttons */}
-            <div className="flex gap-2">
-              {activeTab === 'players' && (
-                <button
-                  onClick={() => setShowAddPlayer(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium text-sm"
-                >
-                  + Add Player
-                </button>
-              )}
-              {activeTab === 'teams' && (
-                <button
-                  onClick={() => setShowAddTeam(true)}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 font-medium text-sm"
-                >
-                  + Add Team
-                </button>
-              )}
-            </div>
+            )}
           </div>
         </div>
       </nav>

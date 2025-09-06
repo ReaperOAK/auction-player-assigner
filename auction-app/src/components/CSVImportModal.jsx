@@ -177,62 +177,40 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-      <div className="bg-white rounded-lg p-6 w-full max-w-md">
-        <h2 className="text-xl font-bold mb-4">Import Players from CSV</h2>
-        
-        <div className="mb-4">
-          <label className="block text-sm font-medium text-gray-700 mb-2">
-            Select CSV File
-          </label>
-          <input
-            type="file"
-            accept=".csv"
-            onChange={handleFileChange}
-            className="w-full p-2 border border-gray-300 rounded-md"
-            disabled={importing}
-          />
-        </div>
-
-        {file && (
-          <div className="mb-4 p-3 bg-blue-50 rounded-md">
-            <p className="text-sm text-blue-700">
-              File: {file.name} ({Math.round(file.size / 1024)} KB)
-            </p>
+    <div className="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50">
+      <div className="w-full max-w-md mx-4">
+        <div className="card">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-xl font-semibold">Import Players from CSV</h2>
+            <button onClick={onClose} className="text-gray-500 hover:text-gray-700 text-2xl focus-ring" aria-label="Close dialog">×</button>
           </div>
-        )}
 
-        {error && (
-          <div className="mb-4 p-3 bg-red-50 rounded-md">
-            <p className="text-sm text-red-700">{error}</p>
+          <div className="mb-4">
+            <label className="block text-sm font-medium text-gray-700 mb-2">Select CSV File</label>
+            <input type="file" accept=".csv" onChange={handleFileChange} className="w-full p-2 border border-gray-200 rounded-md" disabled={importing} aria-label="CSV file input" />
           </div>
-        )}
 
-        <div className="mb-4 p-3 bg-yellow-50 rounded-md">
-          <p className="text-sm text-yellow-700">
-            <strong>Note:</strong> This will replace all existing player data. 
-            Any auction progress (sold players, prices) will be lost.
-          </p>
-          <p className="text-xs text-yellow-600 mt-1">
-            Expected format: RSTC registration CSV with Role, Name, Department, Position, Year columns.
-          </p>
-        </div>
+          {file && (
+            <div className="mb-4 p-3 bg-blue-50 rounded-md">
+              <p className="text-sm text-blue-700">File: {file.name} ({Math.round(file.size / 1024)} KB)</p>
+            </div>
+          )}
 
-        <div className="flex justify-end space-x-3">
-          <button
-            onClick={onClose}
-            disabled={importing}
-            className="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50"
-          >
-            Cancel
-          </button>
-          <button
-            onClick={handleImport}
-            disabled={!file || importing}
-            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50"
-          >
-            {importing ? 'Importing...' : 'Import Players'}
-          </button>
+          {error && (
+            <div className="mb-4 p-3 bg-red-50 rounded-md">
+              <p className="text-sm text-red-700">{error}</p>
+            </div>
+          )}
+
+          <div className="mb-4 p-3 bg-yellow-50 rounded-md">
+            <p className="text-sm text-yellow-700"><strong>Note:</strong> This will replace all existing player data. Any auction progress (sold players, prices) will be lost.</p>
+            <p className="text-xs text-yellow-600 mt-1">Expected format: RSTC registration CSV with Role, Name, Department, Position, Year columns.</p>
+          </div>
+
+          <div className="flex justify-end space-x-3">
+            <button onClick={onClose} disabled={importing} className="px-4 py-2 text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 disabled:opacity-50">Cancel</button>
+            <button onClick={handleImport} disabled={!file || importing} className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 disabled:opacity-50">{importing ? 'Importing...' : 'Import Players'}</button>
+          </div>
         </div>
       </div>
     </div>
