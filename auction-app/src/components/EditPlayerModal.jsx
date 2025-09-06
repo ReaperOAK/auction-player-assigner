@@ -5,8 +5,9 @@ const EditPlayerModal = ({ player, onSave, onClose }) => {
     name: player?.name || '',
     year: player?.year || '',
     position: player?.position || 'MID',
-    prevTournament: player?.prevTournament || false,
-    gender: player?.gender || 'male'
+  prevTournament: player?.prevTournament || false,
+  gender: player?.gender || 'male',
+  department: player?.department || 'CSE'
   });
 
   const handleSubmit = (e) => {
@@ -96,6 +97,24 @@ const EditPlayerModal = ({ player, onSave, onClose }) => {
             </select>
           </div>
 
+          {/* Department */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Department
+            </label>
+            <select
+              value={formData.department}
+              onChange={(e) => handleChange('department', e.target.value)}
+              className="w-full p-3 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+              <option value="EE">EE</option>
+              <option value="IT">IT</option>
+              <option value="AIML">AIML</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
           {/* Played Departmental? */}
           <div>
             <label className="flex items-center space-x-2">

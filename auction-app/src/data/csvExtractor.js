@@ -34,6 +34,14 @@ const mapGender = (role) => {
   return role.toLowerCase().includes('female') ? 'female' : 'male';
 };
 
+// Robust string -> boolean parser for fields like 'Yes', 'No', 'True', 'False', '1', '0'
+const stringToBool = (val) => {
+  if (val === undefined || val === null) return false;
+  const s = String(val).trim().toLowerCase();
+  if (s === 'yes' || s === 'y' || s === 'true' || s === '1' || s === 't') return true;
+  return false;
+};
+
 // Extract data from CSV rows
 export const extractPlayersFromCSV = (csvText) => {
   const lines = csvText.split('\n');
@@ -89,14 +97,15 @@ export const extractPlayersFromCSV = (csvText) => {
 
       let playerData;
       
-      if (role.toLowerCase().includes('female') && femaleName) {
+    if (role.toLowerCase().includes('female') && femaleName) {
         // Female player
         playerData = {
           id: id++,
           name: femaleName.replace(/"/g, '').trim(),
           year: mapYear(femaleYear),
           position: mapPosition(femalePosition),
-          prevTournament: false, // Assuming first tournament for most
+      // CSV has a shared "Are you the part of Departmental team?" column at index 7
+      prevTournament: stringToBool(fields[7]),
           gender: 'female',
           department: femaleDept.replace(/"/g, '').trim(),
           soldTo: null,
@@ -109,7 +118,7 @@ export const extractPlayersFromCSV = (csvText) => {
           name: maleName.replace(/"/g, '').trim(),
           year: mapYear(maleYear),
           position: mapPosition(malePosition),
-          prevTournament: false, // Assuming first tournament for most
+      prevTournament: stringToBool(fields[7]),
           gender: 'male',
           department: maleDept.replace(/"/g, '').trim(),
           soldTo: null,

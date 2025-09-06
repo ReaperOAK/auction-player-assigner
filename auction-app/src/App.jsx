@@ -5,6 +5,7 @@ import { defaultTeams } from './data/defaultTeams';
 import PlayerList from './components/PlayerList';
 import TeamDashboard from './components/TeamDashboard';
 import AuctionControl from './components/AuctionControl';
+import RandomPlayerPicker from './components/RandomPlayerPicker';
 import EditPlayerModal from './components/EditPlayerModal';
 import EditTeamModal from './components/EditTeamModal';
 import AddPlayerModal from './components/AddPlayerModal';
@@ -246,6 +247,18 @@ function App() {
               </button>
             )}
           </div>
+          {/* Random picker is useful while viewing players */}
+          {activeTab === 'players' && (
+            <div className="ml-4">
+              <RandomPlayerPicker
+                players={players}
+                onPick={(player) => {
+                  // open the auction modal for the picked player
+                  setSelectedPlayer(player);
+                }}
+              />
+            </div>
+          )}
         </div>
       </nav>
 

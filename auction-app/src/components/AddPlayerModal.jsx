@@ -5,8 +5,9 @@ const AddPlayerModal = ({ onSave, onClose }) => {
     name: '',
     year: '',
     position: 'MID',
-    prevTournament: false,
-    gender: 'male'
+  prevTournament: false,
+  gender: 'male',
+  department: 'CSE'
   });
 
   const handleSubmit = (e) => {
@@ -96,6 +97,26 @@ const AddPlayerModal = ({ onSave, onClose }) => {
             >
               <option value="male">Boy</option>
               <option value="female">Girl</option>
+            </select>
+          </div>
+
+          {/* Department */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Department
+            </label>
+            <select
+              value={formData.department}
+              onChange={(e) => handleChange('department', e.target.value)}
+              className="w-full p-3 border border-gray-200 rounded-md focus:ring-2 focus:ring-primary-400 focus:border-transparent"
+              aria-label="Department"
+            >
+              <option value="CSE">CSE</option>
+              <option value="ECE">ECE</option>
+              <option value="EE">EE</option>
+              <option value="IT">IT</option>
+              <option value="AIML">AIML</option>
+              <option value="Other">Other</option>
             </select>
           </div>
 

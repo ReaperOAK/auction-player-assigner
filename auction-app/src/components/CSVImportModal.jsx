@@ -75,12 +75,16 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
         else if (position.includes('Midfielder')) parsedPosition = 'MID';
         else if (position.includes('Forward') || position.includes('Attacker')) parsedPosition = 'ATT';
         
+        // Attempt to parse departmental/played field (column index 7 for male entries)
+        const deptField = values[7] || '';
+        const isPlayed = /^(yes|y|true|1)$/i.test(deptField.trim());
+
         players.push({
           id: idCounter++,
           name: name,
           year: parsedYear,
           position: parsedPosition,
-          prevTournament: false,
+          prevTournament: isPlayed,
           gender: 'male',
           department: department,
           soldTo: null,
@@ -115,12 +119,16 @@ const CSVImportModal = ({ isOpen, onClose, onImport }) => {
         else if (position.includes('MIdfielder') || position.includes('Midfielder')) parsedPosition = 'MID';
         else if (position.includes('Forward') || position.includes('Attacker')) parsedPosition = 'ATT';
         
+        // For female entries the departmental/played column appears earlier (index 7 is shared)
+        const deptFieldF = values[7] || '';
+        const isPlayedF = /^(yes|y|true|1)$/i.test(deptFieldF.trim());
+
         players.push({
           id: femaleIdCounter++,
           name: name,
           year: parsedYear,
           position: parsedPosition,
-          prevTournament: false,
+          prevTournament: isPlayedF,
           gender: 'female',
           department: department,
           soldTo: null,
